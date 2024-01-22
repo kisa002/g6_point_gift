@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {# /plugin/플러그인 모듈이름/static/css/admin.css #}
+    {# css, js 경로 /plugin/플러그인 모듈이름/static/파일경로 #}
+
+{% endblock %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block subtitle %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="tbl_head01 tbl_wrap">
+    <table>
+        <caption>포인트관리 목록</caption>
+        <thead>
+            <tr>
+                <th scope="col">보낸 사람</a></th>
+                <th scope="col">받은 사람</th>
+                <th scope="col">선물한 포인트</th>
+                <th scope="col">선물 일시</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for _, gift in gifts.items() %}
+        <tr class="bg{{ loop.cycle('0', '1') }}">
+            <td class="td">{{ gift['sender'] }}</td>
+            <td class="td">{{ gift['receiver'] }}</td>
+            <td class="td">{{ -gift['point'] }}</td>
+            <td class="td">{{ gift['datetime'] }}</td>
+        </tr>
+        {% else %}
+            <tr><td colspan="9" class="empty_table">자료가 없습니다.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

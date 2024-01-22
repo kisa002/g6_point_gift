@@ -21,11 +21,5 @@ admin_menu = {
                 "url": f"{admin_router_prefix}/point_gift_history",
                 "tag": "demo1",
             },
-            {
-                "id": module_name + "2",  # 메뉴 아이디
-                "name": "데모 플러그인 메뉴2",
-                "url": f"{admin_router_prefix}/test_demo_admin",
-                "tag": "demo2",
-            },
         ]
     }
