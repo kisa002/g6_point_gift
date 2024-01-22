@@ -1,4 +1,5 @@
 import select
+import uuid
 from fastapi import APIRouter, Form
 from starlette.requests import Request
 from starlette.responses import RedirectResponse
@@ -10,7 +11,7 @@ from core.template import UserTemplates
 from .. import plugin_config
 from ..plugin_config import router_prefix, module_name
 
-from lib.point import insert_point, delete_point
+from lib.point import insert_point
 from lib.common import Member, select
 
 router = APIRouter()
@@ -18,20 +19,18 @@ templates = UserTemplates()
 
 
 @router.get("/point_gift")
-async def show(request: Request):
-    """템플릿 출력예시"""
+async def point_gift(request: Request):
     return templates.TemplateResponse(
-        f"{plugin_config.TEMPLATE_PATH}/user_demo.html",
+        f"{plugin_config.TEMPLATE_PATH}/user.html",
         {
             "request": request,
             "title": "포인트 선물!",
             "point": request.state.login_member.mb_point,
             "action_url": "point_gift/",
-            "content": f"Hello {module_name}!",
         })
 
 @router.post("/point_gift")
-async def gift_point(
+async def point_gift(
     request: Request,
     db: db_session,
     receiver_id: str = Form(...),
@@ -55,10 +54,28 @@ async def gift_point(
     if current_point < point:
         raise AlertException(detail = "포인트가 부족합니다.", status_code=400, url="point_gift")
     
+    randId = str(uuid.uuid4())
+    
     # 자신의 포인트 차감
-    insert_point(request, receiver_id, point, sender_id + "님에게 포인트 선물 받음", "", "", "")
+    insert_point(
+        request = request,
+        mb_id = sender_id,
+        point = -point,
+        content = receiver_id + "님에게 포인트 선물 보냄",
+        rel_table = "@gift",
+        rel_id = "send",
+        rel_action = randId,
+    )
     
     # 상대방의 포인트 증가
-    insert_point(request, sender_id, -point, receiver_id + "님에게 포인트 선물 보냄", "", "", "")
+    insert_point(
+        request = request,
+        mb_id = receiver_id,
+        point =  point,
+        content = sender_id + "님에게 포인트 선물 받음",
+        rel_table = "@gift",
+        rel_id = "receive",
+        rel_action = randId,
+    )
     
     return RedirectResponse(url=f"{module_name}", status_code=303)
