@@ -11,6 +11,23 @@
     {{ title }}
 {% endblock %}
 
+{% set member=request.state.login_member %}
+
 {% block content %}
-    {{ content }}
+    <form action="{{action_url}}" method="post" style="display: flex; flex-direction: column; width: fit-content;" >
+        <h2>상대방 아이디</h2>
+        <input type="text" id="member_id" name="receiver_id" placeholder="상대방 아이디">
+        </br>
+        <h2>선물할 포인트</h2>
+        <input type="text" id="point" name="point" placeholder="포인트">
+        </br>
+        <div>{{ member }}</div>
+        </br>
+        <div style="display: flex;">
+            <h2>보유 포인트: </h2>
+            <span style="padding-left: 0px">&nbsp;{{ point|number_format }} 포인트</span>
+        </div>
+
+        <button type="submit">선물하기</button>
+    </form>
 {% endblock %}
