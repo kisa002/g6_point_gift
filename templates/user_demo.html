@@ -1,6 +1,52 @@
 {% extends "base.html" %}
 
 {% block head %}
+    <style>
+        .key {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        input {
+            font-size: 1.2em;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        input::-webkit-inner-spin-button {
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            font-size: 1.2em;
+        }
+
+        .info span {
+            padding-left: 4px;
+        }
+
+        button {
+            font-size: 1.2em;
+            padding: 2px;
+        }
+    </style>
+
+    <script>
+        var inputPoint = document.querySelector("input#point");
+
+        function onInputPoint(e) {
+            if (e.value > {{ point }}) {
+                alert("보유 포인트보다 많은 포인트를 선물할 수 없습니다.");
+                e.value = {{ point }};
+            }
+        }
+    </script>
 {% endblock %}
 
 {% block title %}
@@ -15,17 +61,15 @@
 
 {% block content %}
     <form action="{{action_url}}" method="post" style="display: flex; flex-direction: column; width: fit-content;" >
-        <h2>상대방 아이디</h2>
-        <input type="text" id="member_id" name="receiver_id" placeholder="상대방 아이디">
+        <div class="key">선물받을 아이디</div>
+        <input required type="text" name="receiver_id" placeholder="아이디">
         </br>
-        <h2>선물할 포인트</h2>
-        <input type="text" id="point" name="point" placeholder="포인트">
+        <div class="key">선물할 포인트</div>
+        <input required type="number" id="point" name="point" placeholder="포인트" min=0 max={{ point }} onInput=onInputPoint(this)>
         </br>
-        <div>{{ member }}</div>
-        </br>
-        <div style="display: flex;">
+        <div class="info">
             <h2>보유 포인트: </h2>
-            <span style="padding-left: 0px">&nbsp;{{ point|number_format }} 포인트</span>
+            <span>{{ point|number_format }} 포인트</span>
         </div>
 
         <button type="submit">선물하기</button>
