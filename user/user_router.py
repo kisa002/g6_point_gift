@@ -20,6 +20,9 @@ templates = UserTemplates()
 
 @router.get("/point_gift")
 async def point_gift(request: Request):
+    if not request.state.login_member:
+        raise AlertException(detail = "로그인 후 이용해주세요.", status_code=401, url="/")
+    
     return templates.TemplateResponse(
         f"{plugin_config.TEMPLATE_PATH}/user.html",
         {
