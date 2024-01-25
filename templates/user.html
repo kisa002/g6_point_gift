@@ -2,38 +2,89 @@
 
 {% block head %}
     <style>
-        .key {
-            font-size: 1.5em;
+        .point_form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .point_form > .title {
+            font-size: 1.5rem;
             font-weight: bold;
         }
 
-        input {
-            font-size: 1.2em;
-            border: 1px solid black;
+        .point_form > .subtitle {
+            font-size: 1rem;
             text-align: center;
+            color: gray;
+
+            margin-top: 0.6rem;
         }
 
-        input::-webkit-inner-spin-button {
+        .point_form > .input_container {
+            display: flex;
+            flex-direction: column;
+            
+            padding: 1.2em 8em;
+        }
+
+        .point_form > .input_container > * {
+            font-size: 1.2em;
+            text-align: center;
+            
+            padding: 0.5em 2em;
+        }
+
+        .point_form > .input_container > input {
+            background: transparent;
+            border-radius: 7px;
+            
+            filter: drop-shadow(0px 1px 0px #efefef)
+            transition: all 0.3s cubic-bezier(0.15, 0.83, 0.66, 1);
+        }
+
+        .point_form > .input_container > input:first-child {
+            margin-bottom: 0.4em;
+        }
+
+        .point_form > .input_container > input::-webkit-inner-spin-button {
             appearance: none;
             -moz-appearance: none;
             -webkit-appearance: none;
         }
 
-        .info {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
+        .point_form > .input_container > button {
+            width: 100%;
 
-            font-size: 1.2em;
+            border: 0px;
+            border-radius: 7px;
+            
+            padding: 0.7em;
+            margin-top: 1em;
+            
+            color: white;
         }
 
-        .info span {
-            padding-left: 4px;
+        :root[color-theme="light"]  {
+            .point_form > .input_container > input {
+                color: black;
+                border: 1px solid #e5ecee;
+            }
+
+            .point_form > .input_container > button {
+                background: #212121;
+            }
         }
 
-        button {
-            font-size: 1.2em;
-            padding: 2px;
+        :root[color-theme="dark"]  {
+            .point_form > .input_container > input {
+                color: #efefef;
+                border: 1px solid #383838;
+            }
+
+            .point_form > .input_container > button {
+                background: #383838;
+            }
         }
     </style>
 
@@ -60,18 +111,14 @@
 {% set member=request.state.login_member %}
 
 {% block content %}
-    <form action="{{action_url}}" method="post" style="display: flex; flex-direction: column; width: fit-content;" >
-        <div class="key">선물받을 아이디</div>
-        <input required type="text" name="receiver_id" placeholder="아이디">
-        </br>
-        <div class="key">선물할 포인트</div>
-        <input required type="number" id="point" name="point" placeholder="포인트" min=0 max={{ point }} onInput=onInputPoint(this)>
-        </br>
-        <div class="info">
-            <h2>보유 포인트: </h2>
-            <span>{{ point|number_format }} 포인트</span>
-        </div>
+    <form class="point_form" action="{{action_url}}" method="post" >
+        <div class="title">포인트 선물하기</div>
+        <span class="subtitle">원하는 상대에게 포인트를 선물해보세요!<br>선물 취소는 불가능하니 유의하여 선물해주세요.</span>
 
-        <button type="submit">선물하기</button>
+        <div class="input_container">
+            <input required type="text" name="receiver_id" placeholder="상대방 아이디">
+            <input required type="number" name="point" placeholder="선물할 포인트" min=0 max={{ point }} onInput=onInputPoint(this)>
+            <button type="submit">선물하기</button>
+        </div>
     </form>
 {% endblock %}
