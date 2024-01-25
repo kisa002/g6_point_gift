@@ -33,9 +33,10 @@
             text-align: center;
             
             padding: 0.5em 2em;
-
         }
+
         .point_form > .input_container > input {
+            background: transparent;
             border: 1px solid #e5e5e5;
             border-radius: 7px;
             
@@ -64,6 +65,28 @@
             
             color: white;
             background: #212121;
+        }
+
+        :root[color-theme="light"]  {
+            .point_form > .input_container > input {
+                color: black;
+                border: 1px solid #e5ecee;
+            }
+
+            .point_form > .input_container > button {
+                background: #212121;
+            }
+        }
+
+        :root[color-theme="dark"]  {
+            .point_form > .input_container > input {
+                color: #efefef;
+                border: 1px solid #383838;
+            }
+
+            .point_form > .input_container > button {
+                background: #383838;
+            }
         }
     </style>
 
