@@ -15,7 +15,7 @@
 ### 플러그인 적용
 1. `관리자 대시보드` 내 `환경설정` - `플러그인 관리`에서 `포인트 기프트` 항목에 있는 `플러그인 적용`을 클릭합니다.
 2. 사이트 주소 뒤에 /bbs/point_gift에 접속하면 포인트를 선물할 수 있습니다.</br>
-   ex) http://SERVER_ADDRESS/bbs/point_gift 
+   ex) http://SERVER_ADDRESS/point_gift 
 
 ## 플러그인 이미지
 
