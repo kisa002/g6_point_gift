@@ -9,14 +9,13 @@ from core.database import db_session
 from core.template import UserTemplates
 
 from .. import plugin_config
-from ..plugin_config import router_prefix, module_name
+from ..plugin_config import module_name
 
 from lib.point import insert_point
 from lib.common import Member, select
 
 router = APIRouter()
 templates = UserTemplates()
-
 
 @router.get("/point_gift")
 async def point_gift(request: Request):
@@ -56,6 +55,8 @@ async def point_gift(
         raise AlertException(detail = "자기 자신에게 포인트를 선물할 수 없습니다.", status_code=400, url="point_gift")
     if current_point < point:
         raise AlertException(detail = "포인트가 부족합니다.", status_code=400, url="point_gift")
+    if point < 1:
+        raise AlertException(detail = "포인트는 1 이상 입력해주세요.", status_code=400, url="point_gift")
     
     randId = str(uuid.uuid4())
     

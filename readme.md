@@ -39,7 +39,7 @@ plugin Name: 포인트 기프트</br>
 plugin URI: https://github.com/kisa002/g6_point_gift</br>
 Maker: kisa002</br>
 Maker URI: https://haeyum.dev</br>
-Version: 1.0.1</br>
-Detail: 유저간 포인트를 선물할 수 있습니다.</br>1.0.0: 첫 출시</br>1.0.1: 이쁜 라이트/다크 테마</br>
+Version: 1.0.2</br>
+Detail: 유저간 포인트를 선물할 수 있습니다.</br>1.0.0: 첫 출시</br>1.0.1: 이쁜 라이트/다크 테마</br>1.0.2: 변경된 그누보드 플러그인 라우터 규칙 반영([gnuboard/g6#371](https://github.com/gnuboard/g6/pull/371)) 및 1포인트 미만 선물 방지</br>
 License: MIT</br>
 License URI: https://opensource.org/license/mit/</br>

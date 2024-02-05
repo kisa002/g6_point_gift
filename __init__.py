@@ -6,7 +6,7 @@ __all__ = [
     "user",
 ]
 
-from .admin import register_admin_menu, register_admin_router
+from .admin import register_admin_router
 from .user import register_user_router
 
 
