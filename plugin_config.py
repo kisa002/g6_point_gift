@@ -2,7 +2,7 @@ import os
 
 # module_name 는 플러그인의 폴더 이름입니다.
 module_name = os.path.basename(os.path.dirname(os.path.realpath(__file__)))
-router_prefix = "bbs"
+router_prefix = ""
 admin_router_prefix = router_prefix
 
 TEMPLATE_PATH = f"{module_name}/templates"
